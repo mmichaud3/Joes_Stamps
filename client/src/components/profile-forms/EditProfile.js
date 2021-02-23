@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,6 +15,15 @@ const EditProfile = ({
     bio: '',
   });
 
+  useEffect(() => {
+    getCurrentProfile();
+
+    setFormData({
+      location: loading || !profile.location ? '' : profile.location,
+      bio: loading || !profile.bio ? '' : profile.bio,
+    });
+  }, [loading]);
+
   const { location, bio } = formData;
 
   const onChange = (e) =>
@@ -22,7 +31,7 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history);
+    createProfile(formData, history, true);
   };
   return (
     <Fragment>
@@ -54,9 +63,9 @@ const EditProfile = ({
           <small className='form-text'>Tell us a little about yourself</small>
         </div>
         <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link className='btn btn-light my-1' to='/dashboard'>
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
