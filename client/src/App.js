@@ -8,6 +8,10 @@ import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
+import EditCollection from './components/collection/EditCollection';
+import AddFDC from './components/collection/AddFDC';
+import EditFDC from './components/collection/EditFDC';
+import Collection from './components/collection/Collection';
 import PrivateRoute from './components/routing/PrivateRoute';
 // redux
 import { Provider } from 'react-redux';
@@ -48,6 +52,14 @@ const App = () => {
                 path='/edit-profile'
                 component={EditProfile}
               />
+              <PrivateRoute
+                exact
+                path='/edit-collection'
+                component={EditCollection}
+              />
+              <PrivateRoute exact path='/add-fdc' component={AddFDC} />
+              <PrivateRoute exact path='/edit-fdc' component={EditFDC} />
+              <PrivateRoute exact path='/collection' component={Collection} />
             </Switch>
           </section>
         </Fragment>

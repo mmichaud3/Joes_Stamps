@@ -1,4 +1,9 @@
-import { CLEAR_PROFILE, GET_PROFILE, PROFILE_ERROR } from '../actions/types';
+import {
+  CLEAR_PROFILE,
+  GET_PROFILE,
+  PROFILE_ERROR,
+  UPDATE_FDC,
+} from '../actions/types';
 
 const initialState = {
   profile: null,
@@ -13,6 +18,7 @@ const Profile = (state = initialState, action) => {
 
   switch (type) {
     case GET_PROFILE:
+    case UPDATE_FDC:
       return {
         ...state,
         profile: payload,

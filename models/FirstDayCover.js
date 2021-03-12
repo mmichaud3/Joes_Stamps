@@ -14,7 +14,7 @@ const FirstDayCoverSchema = new mongoose.Schema({
     type: Date,
   },
   year: {
-    type: Date,
+    type: String,
   },
   description: {
     type: String,

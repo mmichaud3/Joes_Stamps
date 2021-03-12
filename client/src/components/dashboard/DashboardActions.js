@@ -7,6 +7,9 @@ export const DashboardActions = () => {
       <Link to='/edit-profile' class='btn btn-light'>
         <i class='fas fa-user-circle text-primary'></i> Edit Profile
       </Link>
+      <Link to='/edit-collection' class='btn btn-light'>
+        <i class='far fa-edit text-primary'></i> Edit Collection
+      </Link>
     </div>
   );
 };

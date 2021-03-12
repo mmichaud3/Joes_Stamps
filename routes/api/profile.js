@@ -126,4 +126,134 @@ router.delete('/', auth, async (req, res) => {
   }
 });
 
+// @route  put api/
+// @desc   Add firstDayCover
+// @access Private
+
+router.put(
+  '/fdcs',
+  [auth, [check('scottNum', 'Scott number is required').not().isEmpty()]],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const {
+      scottNum,
+      collinsNum,
+      title,
+      issueDate,
+      year,
+      description,
+      location,
+      price,
+      value,
+      partOfSet,
+      quantity,
+      group,
+      chachetmaker,
+      series,
+      denomination,
+      format,
+      variety,
+    } = req.body;
+
+    const fdcFields = {
+      scottNum,
+      collinsNum,
+      title,
+      issueDate,
+      year,
+      description,
+      location,
+      price,
+      value,
+      partOfSet,
+      quantity,
+      group,
+      chachetmaker,
+      series,
+      denomination,
+      format,
+      variety,
+    };
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+
+      profile.fdcs.unshift(fdcFields);
+      await profile.save();
+
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route  GET api/firstDayCover
+// @desc   Get all covers
+// @access Private
+// router.get('/', [auth], async (req, res) => {
+//   try {
+//     const firstDayCovers = await FirstDayCover.find().populate([
+//       'scottNum',
+//       'collinsNum',
+//       'title',
+//     ]);
+//     res.json(firstDayCovers);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server Error');
+//   }
+// });
+
+// @route  GET api/firstDayCover/scottNum
+// @desc   Get firstDayCover by scottNum
+// @access private
+// router.get('/:scottNum', [auth], async (req, res) => {
+//   try {
+//     const firstDayCover = await FirstDayCover.findOne({
+//       scottNum: req.params.scottNum,
+//     });
+
+//     if (!firstDayCover) {
+//       return res.status(400).json({ msg: 'First Day Cover not found' });
+//     }
+
+//     res.json(firstDayCover);
+//   } catch (err) {
+//     console.error(err.message);
+//     if (err.kind == 'ObjectId') {
+//       return res.status(400).json({ msg: 'Profile not found' });
+//     }
+
+//     res.status(500).send('Server Error');
+//   }
+// });
+
+// @route  DELETE api/firstDayCover
+// @desc   Delete firstDayCover
+// @access Private
+router.delete('/fdcs/:fdc_id', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // Get remove index
+    const removeIndex = profile.fdcs
+      .map((item) => item.id)
+      .indexOf(req.params.exp_id);
+
+    profile.education.splice(removeIndex, 1);
+
+    await profile.save();
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

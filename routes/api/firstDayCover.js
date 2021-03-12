@@ -81,7 +81,11 @@ router.post('/', [auth], async (req, res) => {
 // @access Private
 router.get('/', [auth], async (req, res) => {
   try {
-    const firstDayCovers = await FirstDayCover.find();
+    const firstDayCovers = await FirstDayCover.find().populate([
+      'scottNum',
+      'collinsNum',
+      'title',
+    ]);
     res.json(firstDayCovers);
   } catch (err) {
     console.error(err.message);

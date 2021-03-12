@@ -50,7 +50,7 @@ const EditProfile = ({
             required
           />
           <small className='form-text'>
-            City & state suggested (eg. Boston, MA)
+            City & state suggested (eg. New York, NY)
           </small>
         </div>
         <div className='form-group'>
