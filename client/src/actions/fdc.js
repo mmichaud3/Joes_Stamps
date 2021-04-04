@@ -50,18 +50,18 @@ export const deleteFDC = (id) => async (dispatch) => {
 };
 
 // get all FDCs
-// export const getFDCS = () => async (dispatch) => {
-//   try {
-//     const res = await axios.get('/api/firstDayCover');
+export const getFDCS = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/profile/fdcs');
 
-//     dispatch({
-//       type: GET_FDCS,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     dispatch({
-//       type: PROFILE_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status },
-//     });
-//   }
-// };
+    dispatch({
+      type: GET_FDCS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

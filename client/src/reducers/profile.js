@@ -3,6 +3,7 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   UPDATE_FDC,
+  GET_FDCS,
 } from '../actions/types';
 
 const initialState = {
@@ -15,10 +16,10 @@ const initialState = {
 
 const Profile = (state = initialState, action) => {
   const { type, payload } = action;
-
   switch (type) {
     case GET_PROFILE:
     case UPDATE_FDC:
+    case GET_FDCS:
       return {
         ...state,
         profile: payload,

@@ -138,6 +138,7 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     const {
       scottNum,
       collinsNum,
@@ -195,19 +196,22 @@ router.put(
 // @route  GET api/firstDayCover
 // @desc   Get all covers
 // @access Private
-// router.get('/', [auth], async (req, res) => {
-//   try {
-//     const firstDayCovers = await FirstDayCover.find().populate([
-//       'scottNum',
-//       'collinsNum',
-//       'title',
-//     ]);
-//     res.json(firstDayCovers);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send('Server Error');
-//   }
-// });
+router.get('/fdcs', [auth], async (req, res) => {
+  console.log('api');
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // profile.fdcs.unshift(fdcFields);
+    // const firstDayCovers = await Profile.find().populate([
+    //   'fdcs',
+    //   ['scottNum'],
+    // ]);
+    res.json(profile.fdcs);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // @route  GET api/firstDayCover/scottNum
 // @desc   Get firstDayCover by scottNum

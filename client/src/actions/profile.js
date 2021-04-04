@@ -57,6 +57,7 @@ export const createProfile = (formData, history, edit = false) => async (
 };
 
 export const createFDC = (formData, history) => async (dispatch) => {
+  console.log('action');
   try {
     const config = {
       headers: {
