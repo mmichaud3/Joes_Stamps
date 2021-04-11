@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
+import Container from '@material-ui/core/Container';
 import { DashboardActions } from './DashboardActions';
 import Collection from '../collection/Collection';
 
@@ -19,25 +20,25 @@ const Dashboard = ({
   return loading && profile === null ? (
     <Spinner />
   ) : (
-    <Fragment>
+    <Container>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
         <i className='fas fa-user'> Welcome {user && user.name}</i>
       </p>
       {profile !== null ? (
-        <Fragment>
+        <Container>
           <DashboardActions />
-          <Collection fdcs={profile.fdcs} />
-        </Fragment>
+          <Collection />
+        </Container>
       ) : (
-        <Fragment>
+        <Container>
           <p>You have not yet set up a profile, please add some info</p>
           <Link to='/create-profile' className='btn btn-primary my-1'>
             Create Profile
           </Link>
-        </Fragment>
+        </Container>
       )}
-    </Fragment>
+    </Container>
   );
 };
 
