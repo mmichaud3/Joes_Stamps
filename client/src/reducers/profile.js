@@ -19,10 +19,15 @@ const Profile = (state = initialState, action) => {
   switch (type) {
     case GET_PROFILE:
     case UPDATE_FDC:
-    case GET_FDCS:
       return {
         ...state,
         profile: payload,
+        loading: false,
+      };
+    case GET_FDCS:
+      return {
+        ...state,
+        fdcs: payload,
         loading: false,
       };
     case PROFILE_ERROR:

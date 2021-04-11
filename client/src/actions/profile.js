@@ -86,6 +86,7 @@ export const createFDC = (formData, history) => async (dispatch) => {
 };
 
 export const deleteFDC = (id) => async (dispatch) => {
+  console.log('action');
   try {
     const res = await axios.delete(`/api/profile/fdcs/${id}`);
 

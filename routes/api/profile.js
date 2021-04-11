@@ -247,9 +247,9 @@ router.delete('/fdcs/:fdc_id', auth, async (req, res) => {
     // Get remove index
     const removeIndex = profile.fdcs
       .map((item) => item.id)
-      .indexOf(req.params.exp_id);
+      .indexOf(req.params.fdc_id);
 
-    profile.education.splice(removeIndex, 1);
+    profile.fdcs.splice(removeIndex, 1);
 
     await profile.save();
 

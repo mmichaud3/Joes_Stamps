@@ -1,7 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { deleteFDC } from '../../actions/profile';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
-
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -40,14 +43,56 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  popTypography: {
+    padding: theme.spacing(2),
+  },
 }));
 
-export default function CollectionItem() {
+const CollectionItem = ({
+  key,
+  id,
+  scottNum,
+  collinsNum,
+  title,
+  issueDate,
+  year,
+  description,
+  location,
+  price,
+  value,
+  quantity,
+  group,
+  chachetmaker,
+  series,
+  denomination,
+  format,
+  variety,
+  deleteFDC,
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // popover
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  useEffect(() => {
+    console.log(id);
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleDelete = () => {
+    deleteFDC(id);
+    console.log('delete');
   };
 
   return (
@@ -59,12 +104,30 @@ export default function CollectionItem() {
           </Avatar>
         }
         action={
-          <IconButton aria-label='settings'>
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton
+              aria-label='settings'
+              aria-controls='simple-menu'
+              aria-haspopup='true'
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id='simple-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Edit</MenuItem>
+              <MenuItem onClick={handleDelete}>Delete</MenuItem>
+              {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+            </Menu>
+          </>
         }
-        title='Shrimp and Chorizo Paella'
-        subheader='September 14, 2016'
+        title={title}
+        subheader={scottNum}
       />
       <CardMedia
         className={classes.media}
@@ -73,9 +136,7 @@ export default function CollectionItem() {
       />
       <CardContent>
         <Typography variant='body2' color='textSecondary' component='p'>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -98,39 +159,45 @@ export default function CollectionItem() {
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is
-            absorbed, 15 to 18 minutes. Reduce heat to medium-low, add reserved
-            shrimp and mussels, tucking them down into the rice, and cook again
-            without stirring, until mussels have opened and rice is just tender,
-            5 to 7 minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
+          <Typography>Scott #: {scottNum}</Typography>
+          <Typography>Collin's #: {collinsNum}</Typography>
+          <Typography>Issue Date: {issueDate}</Typography>
+          <Typography> Year: {year}</Typography>
+          <Typography>Location: {location}</Typography>
+          <Typography>Price: {price}</Typography>
+          <Typography>Value: {value}</Typography>
+          <Typography>Quantity: {quantity}</Typography>
+          <Typography>Chachet Maker: {chachetmaker}</Typography>
+          <Typography>Series: {series}</Typography>
+          <Typography>Denomination: {denomination}</Typography>
+          <Typography>Format: {format}</Typography>
+          <Typography>Variety: {variety}</Typography>
         </CardContent>
       </Collapse>
     </Card>
   );
-}
+};
 
 CollectionItem.propTypes = {
-  firstDayCover: PropTypes.object.isRequired,
+  key: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  scottNum: PropTypes.string.isRequired,
+  collinsNum: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  issueDate: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  quantity: PropTypes.string.isRequired,
+  group: PropTypes.string.isRequired,
+  chachetmaker: PropTypes.string.isRequired,
+  denomination: PropTypes.string.isRequired,
+  series: PropTypes.string.isRequired,
+  format: PropTypes.string.isRequired,
+  variety: PropTypes.string.isRequired,
+  deleteFDC: PropTypes.func.isRequired,
 };
+
+export default connect(null, { deleteFDC })(withRouter(CollectionItem));

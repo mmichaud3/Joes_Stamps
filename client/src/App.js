@@ -13,6 +13,8 @@ import AddFDC from './components/collection/AddFDC';
 import EditFDC from './components/collection/EditFDC';
 import Collection from './components/collection/Collection';
 import PrivateRoute from './components/routing/PrivateRoute';
+import Container from '@material-ui/core/Container';
+
 // redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -36,7 +38,7 @@ const App = () => {
           <Navbar />
           <Route exact path='/' component={Landing} />
 
-          <section className='container'>
+          <Container>
             <Alert />
             <Switch>
               <Route exact path='/register' component={Register} />
@@ -61,7 +63,7 @@ const App = () => {
               <PrivateRoute exact path='/edit-fdc' component={EditFDC} />
               <PrivateRoute exact path='/collection' component={Collection} />
             </Switch>
-          </section>
+          </Container>
         </Fragment>
       </Router>
     </Provider>
